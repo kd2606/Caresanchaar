@@ -50,10 +50,11 @@ if (app) {
 }
 
 let analytics: any = null;
-if (app && typeof window !== 'undefined') {
+const currentApp = app;
+if (currentApp && typeof window !== 'undefined') {
     isSupported().then(yes => {
         if (yes) {
-            analytics = getAnalytics(app);
+            analytics = getAnalytics(currentApp);
         }
     });
 }
