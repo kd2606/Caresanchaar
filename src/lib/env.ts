@@ -20,12 +20,25 @@ const schema = z.object({
   GEMINI_GENERATION_MODEL: z.string().default('gemini-3.8-flash'),
 });
 
-export const env = schema.parse({
-  GEMINI_API_KEY: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY,
-  SUPABASE_URL: process.env.SUPABASE_URL,
-  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  GEMINI_EMBEDDING_MODEL: process.env.GEMINI_EMBEDDING_MODEL,
-  GEMINI_GENERATION_MODEL: process.env.GEMINI_GENERATION_MODEL,
+let _env: z.infer<typeof schema> | null = null;
+
+function getEnv() {
+  if (!_env) {
+    _env = schema.parse({
+      GEMINI_API_KEY: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY,
+      SUPABASE_URL: process.env.SUPABASE_URL,
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+      GEMINI_EMBEDDING_MODEL: process.env.GEMINI_EMBEDDING_MODEL,
+      GEMINI_GENERATION_MODEL: process.env.GEMINI_GENERATION_MODEL,
+    });
+  }
+  return _env;
+}
+
+export const env = new Proxy({} as z.infer<typeof schema>, {
+  get(_, prop: string) {
+    return getEnv()[prop as keyof z.infer<typeof schema>];
+  },
 });
 
 export type DatasetSource =

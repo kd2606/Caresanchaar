@@ -7,7 +7,11 @@ import {
 } from '@/lib/triage/schema';
 import { SYSTEM_INSTRUCTION } from '@/lib/triage/prompt';
 
-const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+let _ai: GoogleGenAI | null = null;
+function getAI() {
+  if (!_ai) _ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+  return _ai;
+}
 
 /**
  * Call Gemini with a constrained JSON schema and validate the result.
@@ -21,7 +25,7 @@ const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 export async function generateTriageAssessment(
   userPrompt: string,
 ): Promise<AiTriageOutput> {
-  const response = await ai.models.generateContent({
+  const response = await getAI().models.generateContent({
     model: env.GEMINI_GENERATION_MODEL,
     contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
     config: {

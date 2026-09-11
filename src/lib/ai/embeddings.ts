@@ -5,10 +5,15 @@ import { env } from '@/lib/env';
 export const EMBEDDING_DIMENSIONS = 768;
 
 /** Conservative char budget: 8,192-token cap on embedding-2, ~2,048 on 001. */
-const MAX_CHARS = env.GEMINI_EMBEDDING_MODEL === 'gemini-embedding-001' ? 6_000 : 24_000;
+function getMaxChars() {
+  return env.GEMINI_EMBEDDING_MODEL === 'gemini-embedding-001' ? 6_000 : 24_000;
+}
 
-const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
-
+let _ai: GoogleGenAI | null = null;
+function getAI() {
+  if (!_ai) _ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+  return _ai;
+}
 export type EmbedIntent = 'document' | 'query';
 
 /**
@@ -81,14 +86,14 @@ export async function embedDocuments(
 
   const contents = docs.map((doc) => ({
     parts: [
-      { text: applyTaskFormat(doc.content.slice(0, MAX_CHARS), intent, doc.title) },
+      { text: applyTaskFormat(doc.content.slice(0, getMaxChars()), intent, doc.title) },
     ],
   }));
 
   const taskType = taskTypeFor(intent);
 
   const response = await withRetry(() =>
-    ai.models.embedContent({
+    getAI().models.embedContent({
       model: env.GEMINI_EMBEDDING_MODEL,
       contents,
       config: {
