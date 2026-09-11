@@ -75,33 +75,33 @@ export default function AuthPage() {
             </CardContent>
           </Card>
 
-          {/* Patient / Citizen Card */}
+          {/* District Admin Card */}
           <Card 
             className="group cursor-pointer bg-slate-900 border-slate-800 hover:border-teal-500/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-teal-900/20 overflow-hidden"
-            onClick={() => router.push(`/${locale}/auth/patient`)}
+            onClick={() => router.push(`/${locale}/auth/district`)}
           >
             <div className="h-2 bg-gradient-to-r from-teal-500 to-emerald-500" />
             <CardHeader className="space-y-4">
               <div className="w-16 h-16 rounded-2xl bg-teal-950/50 flex items-center justify-center border border-teal-900/50 group-hover:scale-110 transition-transform duration-300">
-                <Heart className="w-8 h-8 text-teal-400" />
+                <Shield className="w-8 h-8 text-teal-400" />
                 <User className="w-4 h-4 text-teal-400 absolute bottom-3 right-3 bg-slate-900 rounded-full" />
               </div>
               <div>
-                <CardTitle className="text-2xl text-white">Patient / Citizen</CardTitle>
+                <CardTitle className="text-2xl text-white">District Admin</CardTitle>
                 <CardDescription className="text-slate-400 mt-2 text-base">
-                  (ABHA ID Holders)
+                  (DHO / CDMO)
                 </CardDescription>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-slate-300 mb-6 h-12">
-                View your health records, prescriptions, and book teleconsultations.
+                Monitor district health indicators, referral cascades, and workforce.
               </p>
               <ul className="space-y-3">
                 {[
-                  "View E-Prescriptions & Reports",
-                  "Book Teleconsultations",
-                  "Link Health Records via ABHA"
+                  "Epidemiological Dashboard",
+                  "Facility & Worker Management",
+                  "Referral Escalation Monitoring"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-start space-x-3 text-sm text-slate-400">
                     <CheckCircle2 className="w-5 h-5 text-teal-500 shrink-0" />
@@ -110,7 +110,7 @@ export default function AuthPage() {
                 ))}
               </ul>
               <Button className="w-full mt-8 bg-teal-600 hover:bg-teal-700 text-white" variant="default">
-                Login as Patient
+                Login as District Admin
               </Button>
             </CardContent>
           </Card>

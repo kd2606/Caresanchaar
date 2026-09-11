@@ -46,7 +46,19 @@ export async function POST(request: Request) {
       // Set the custom claim (preserve any existing claims)
       const existingUser = await adminAuth()!.getUser(uid);
       const existingClaims = existingUser.customClaims || {};
-      
+
+      // SECURITY FIX: Prevent privilege escalation
+      if (['admin', 'district_admin', 'mo', 'district'].includes(role)) {
+        if (existingClaims.role !== 'admin') {
+           return NextResponse.json({ error: 'Unauthorized: Only admins can assign elevated roles' }, { status: 403 });
+        }
+      } else if (role === 'worker' || role === 'asha') {
+        // Allow self-assignment of 'worker' only if they don't have a role yet
+        if (existingClaims.role && existingClaims.role !== 'worker' && existingClaims.role !== 'asha') {
+           return NextResponse.json({ error: 'Unauthorized: User already has an assigned role' }, { status: 403 });
+        }
+      }
+
       const newClaims: any = { ...existingClaims, role };
       
       // For demo purposes, inject a demo district scope so backend lists work

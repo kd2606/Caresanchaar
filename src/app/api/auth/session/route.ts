@@ -10,16 +10,25 @@ export async function POST(request: Request) {
     const idToken = body?.idToken;
     if (!idToken) return NextResponse.json({ error: 'missing idToken' }, { status: 400 });
 
-    let maxAge = 3600; // fallback to 1 hour
+    // Verify the token securely before accepting it
+    const { adminAuth } = await import('@/lib/firebase/admin');
+    const auth = adminAuth();
+    if (!auth) {
+      return NextResponse.json({ error: 'Admin SDK not initialized' }, { status: 500 });
+    }
+    
+    let decoded;
     try {
-      const payloadBase64 = idToken.split('.')[1];
-      const payload = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
-      if (payload.exp) {
-        const now = Math.floor(Date.now() / 1000);
-        maxAge = Math.max(0, payload.exp - now);
-      }
+      decoded = await auth.verifyIdToken(idToken);
     } catch (e) {
-      console.warn("Failed to decode token exp for cookie maxAge", e);
+      console.warn("Invalid ID token submitted to session endpoint");
+      return NextResponse.json({ error: 'Invalid or expired idToken' }, { status: 401 });
+    }
+
+    let maxAge = 3600; // fallback to 1 hour
+    if (decoded.exp) {
+      const now = Math.floor(Date.now() / 1000);
+      maxAge = Math.max(0, decoded.exp - now);
     }
 
     (await cookies()).set(SESSION_COOKIE, idToken, {

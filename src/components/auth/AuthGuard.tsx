@@ -42,51 +42,12 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       if (cancelled) return;
 
       let role = result.claims.role as string | undefined;
-      let effectiveRole = role;
       let homePath = '';
 
-      if (role === 'patient') {
-        homePath = '/dashboard/patient';
-      } else if (role === 'worker' || role === 'asha') {
+      if (role === 'worker' || role === 'asha') {
         homePath = '/dashboard/worker';
       } else if (role === 'district_admin' || role === 'mo' || role === 'admin' || role === 'district') {
         homePath = '/dashboard/district';
-      }
-
-      // If role is missing, infer from the current dashboard path and ASSIGN BEFORE setting session
-      if (!homePath) {
-        if (purePath.startsWith('/dashboard/worker')) {
-          homePath = '/dashboard/worker';
-          effectiveRole = 'worker';
-        } else if (purePath.startsWith('/dashboard/district')) {
-          homePath = '/dashboard/district';
-          effectiveRole = 'district_admin';
-        } else if (purePath.startsWith('/dashboard/patient')) {
-          homePath = '/dashboard/patient';
-          effectiveRole = 'patient';
-        }
-
-        if (effectiveRole && effectiveRole !== role) {
-          if (!sessionStorage.getItem('role_assign_attempted')) {
-            sessionStorage.setItem('role_assign_attempted', 'true');
-            try {
-              const token = await user.getIdToken();
-              await fetch('/api/auth/assign-role', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ idToken: token, role: effectiveRole }),
-              });
-              // Force refresh token to get the newly assigned custom claims
-              await user.getIdToken(true);
-              result = await user.getIdTokenResult();
-              role = result.claims.role as string | undefined;
-            } catch (e) {
-              console.warn("Role assignment failed:", e);
-            }
-          } else {
-            console.warn("Role assignment already attempted this session. Skipping to avoid infinite loop.");
-          }
-        }
       }
 
       await fetch('/api/auth/session', {
@@ -95,7 +56,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         body: JSON.stringify({ idToken: result.token }),
       });
 
-      // 3. Block missing/unknown roles completely (only if we can't infer either)
+      // 3. Block missing/unknown roles completely
       if (!homePath) {
         if (!role) {
            setErrorMsg(t('missingRole'));
@@ -114,13 +75,11 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      // 5. Strict path isolation (use effectiveRole for checking)
+      // 5. Strict path isolation
       let isAllowed = false;
-      if (effectiveRole === 'patient') {
-        isAllowed = purePath.startsWith('/dashboard/patient');
-      } else if (effectiveRole === 'worker' || effectiveRole === 'asha') {
+      if (role === 'worker' || role === 'asha') {
         isAllowed = purePath.startsWith('/dashboard/worker');
-      } else if (effectiveRole === 'district_admin' || effectiveRole === 'mo' || effectiveRole === 'admin' || effectiveRole === 'district') {
+      } else if (role === 'district_admin' || role === 'mo' || role === 'admin' || role === 'district') {
         isAllowed = purePath.startsWith('/dashboard/district') || purePath.startsWith('/dashboard/worker');
       }
 

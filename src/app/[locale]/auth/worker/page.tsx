@@ -294,9 +294,11 @@ function LoginContent() {
                             <Button type="submit" className="w-full h-12 rounded-2xl bg-white text-black font-bold hover:bg-emerald-50 transition-all shadow-xl active:scale-[0.98]" disabled={loading}>
                                 {loading ? <Loader2 className="animate-spin" /> : <><Mail className="w-4 h-4 mr-2" /> Login with Email</>}
                             </Button>
+                            {process.env.NODE_ENV !== 'production' && (
                             <Button type="button" variant="outline" className="w-full h-12 rounded-2xl border-white/10 bg-white/5 text-white font-bold hover:bg-white/10 hover:text-white transition-all shadow-xl active:scale-[0.98]" disabled={loading} onClick={handleDemoLogin}>
                                 {loading ? <Loader2 className="animate-spin" /> : 'Demo Login'}
                             </Button>
+                            )}
                         </form>
 
                         <div className="relative my-8">
@@ -337,15 +339,6 @@ function LoginContent() {
                             </Button>
                         </div>
                     </CardContent>
-
-                    <CardFooter className="flex flex-col items-center justify-center border-t border-white/5 pt-8 pb-10 mt-4">
-                        <div className="text-center text-sm">
-                            <span className="text-white/40 mr-2">New Here?</span>
-                            <Link href={`/${locale}/signup`} className="text-emerald-400 hover:text-emerald-300 font-bold transition-colors">
-                                Create Account
-                            </Link>
-                        </div>
-                    </CardFooter>
                 </Card>
             </motion.div>
         </div>

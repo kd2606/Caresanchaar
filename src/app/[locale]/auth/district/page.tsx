@@ -217,9 +217,11 @@ function LoginContent() {
                             <Button type="submit" className="w-full h-12 rounded-2xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-all shadow-md active:scale-[0.98]" disabled={loading}>
                                 {loading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : <Mail className="w-4 h-4 mr-2" />} Login with Email
                             </Button>
+                            {process.env.NODE_ENV !== 'production' && (
                             <Button type="button" variant="outline" className="w-full h-12 rounded-2xl border-slate-200 bg-white text-slate-700 font-bold hover:bg-slate-50 transition-all shadow-sm active:scale-[0.98]" disabled={loading} onClick={handleDemoLogin}>
                                 {loading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : null} Demo Login
                             </Button>
+                            )}
                         </form>
 
                         <div className="relative my-6">

@@ -25,6 +25,7 @@ export function useUser() {
 
     const signOut = async () => {
         try {
+            await fetch('/api/auth/session', { method: 'DELETE' });
             await firebaseSignOut(auth);
             router.push("/");
         } catch (error) {

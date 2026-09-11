@@ -6,7 +6,6 @@ import { Plus_Jakarta_Sans, DM_Sans, Space_Grotesk } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { FirebaseProvider } from "@/firebase/provider";
 import { Toaster } from "@/components/ui/sonner";
-import { PatientLayoutWrapper } from "@/components/patient-layout-wrapper";
 import { RoleSwitcher } from "@/components/role-switcher";
 import "../globals.css";
 
@@ -55,9 +54,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                 >
                     <NextIntlClientProvider messages={messages}>
                         <FirebaseProvider>
-                            <PatientLayoutWrapper locale={locale}>
-                                {children}
-                            </PatientLayoutWrapper>
+                            {children}
                             <Toaster />
                             <RoleSwitcher />
                         </FirebaseProvider>

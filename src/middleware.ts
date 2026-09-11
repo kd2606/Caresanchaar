@@ -13,18 +13,16 @@ const SESSION_COOKIE = '__session';
  * Returns null for unknown / missing roles so we never silently
  * default to 'patient'.
  */
-type DashboardRole = 'patient' | 'worker' | 'district';
+type DashboardRole = 'worker' | 'district';
 
 function normalisedRole(claimRole: string | undefined): DashboardRole | null {
   if (!claimRole) return null;
-  if (claimRole === 'patient') return 'patient';
   if (claimRole === 'worker' || claimRole === 'asha') return 'worker';
   if (claimRole === 'district_admin' || claimRole === 'mo' || claimRole === 'admin' || claimRole === 'district') return 'district';
   return null;
 }
 
 const HOME_FOR: Record<DashboardRole, string> = {
-  patient: '/dashboard/patient',
   worker: '/dashboard/worker',
   district: '/dashboard/district',
 };
@@ -72,20 +70,7 @@ export default async function proxy(request: NextRequest) {
 
   let role = normalisedRole(claims.role as string | undefined);
 
-  // If role is missing from claims, infer from the dashboard path the user is
-  // trying to reach. This covers demo users and newly signed-up users whose
-  // custom claims haven't propagated to the session cookie yet.
-  if (!role) {
-    if (path.startsWith('/dashboard/worker')) {
-      role = 'worker';
-    } else if (path.startsWith('/dashboard/district')) {
-      role = 'district';
-    } else if (path.startsWith('/dashboard/patient')) {
-      role = 'patient';
-    }
-  }
-
-  // Still unknown — clear session, send to landing
+  // If still no role, clear session and redirect to landing
   if (!role) {
     const url = request.nextUrl.clone();
     url.pathname = localized(locale, '/');
@@ -95,11 +80,7 @@ export default async function proxy(request: NextRequest) {
     return res;
   }
 
-  
-
   const allowed =
-    
-    (role === 'patient' && path.startsWith('/dashboard/patient')) ||
     (role === 'worker' && path.startsWith('/dashboard/worker')) ||
     (role === 'district' &&
       (path.startsWith('/dashboard/district') || path.startsWith('/dashboard/worker')));

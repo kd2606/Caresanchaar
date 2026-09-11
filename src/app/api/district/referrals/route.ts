@@ -114,28 +114,37 @@ export async function GET(request: NextRequest) {
         ? Math.min(limitParam, 200)
         : 50;
     const statusFilter = url.searchParams.get('status');
+    // SECURITY FIX: Require strict bearer token authentication
+    const authHeader = request.headers.get('authorization') ?? '';
+    let decodedToken = null;
     let districtId = url.searchParams.get('districtId');
 
-    // Optional bearer-token scoping. A missing/invalid token degrades to the
-    // districtId query param rather than failing the request.
-    const authHeader = request.headers.get('authorization') ?? '';
-    if (authHeader.toLowerCase().startsWith('bearer ')) {
-      const token = authHeader.slice(7).trim();
-      const auth = getAdminAuth();
-      if (auth && token) {
-        try {
-          const decoded = await auth.verifyIdToken(token);
-          const claimDistrict = decoded.districtId;
-          if (typeof claimDistrict === 'string' && claimDistrict) {
-            districtId = claimDistrict;
-          }
-        } catch (err) {
-          console.warn(
-            '[api/district/referrals] Token verification failed:',
-            err instanceof Error ? err.message : err,
-          );
-        }
+    if (!authHeader.toLowerCase().startsWith('bearer ')) {
+       return NextResponse.json({ ok: false, error: 'Unauthorized', code: 'UNAUTHENTICATED' }, { status: 401, headers: NO_STORE });
+    }
+
+    const token = authHeader.slice(7).trim();
+    const auth = getAdminAuth();
+    if (!auth) {
+       return NextResponse.json({ ok: false, error: 'Admin Auth unavailable', code: 'ADMIN_UNAVAILABLE' }, { status: 500, headers: NO_STORE });
+    }
+
+    try {
+      decodedToken = await auth.verifyIdToken(token);
+      
+      // Enforce role
+      const role = decodedToken.role;
+      if (role !== 'district' && role !== 'district_admin' && role !== 'admin') {
+         return NextResponse.json({ ok: false, error: 'Forbidden', code: 'UNAUTHENTICATED' }, { status: 403, headers: NO_STORE });
       }
+
+      // If token specifies a district, strictly enforce it
+      if (decodedToken.district_id || decodedToken.districtId) {
+        districtId = decodedToken.district_id || decodedToken.districtId;
+      }
+    } catch (err) {
+      console.warn('[api/district/referrals] Token verification failed:', err instanceof Error ? err.message : err);
+      return NextResponse.json({ ok: false, error: 'Invalid token', code: 'UNAUTHENTICATED' }, { status: 401, headers: NO_STORE });
     }
 
     try {

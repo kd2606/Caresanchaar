@@ -1,8 +1,29 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Allow authenticated workers to sync their own records
+    match /patients/{docId} {
+      allow read: if request.auth != null && (request.auth.token.role == 'worker' || request.auth.token.role == 'district_admin' || request.auth.token.role == 'mo' || request.auth.token.role == 'admin');
+      allow write: if request.auth != null && (request.auth.uid == request.resource.data.created_by || request.auth.token.role == 'worker');
+    }
+    match /triage_records/{docId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.auth.uid == request.resource.data.created_by || request.auth.token.role == 'worker');
+    }
+    match /referrals/{docId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.auth.uid == request.resource.data.created_by || request.auth.token.role == 'worker');
+    }
+    match /consents/{docId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.auth.uid == request.resource.data.created_by || request.auth.token.role == 'worker');
+    }
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    // Block all other direct client access (they should use backend APIs)
     match /{document=**} {
-      allow read, write: if request.auth != null;
+      allow read, write: if false;
     }
   }
 }

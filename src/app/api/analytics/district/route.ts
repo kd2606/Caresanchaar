@@ -123,25 +123,35 @@ export async function GET(request: NextRequest) {
       return ok(EMPTY_PAYLOAD, { ...baseMeta(), reason: 'admin-unavailable' });
     }
 
-    // --- Identity (soft): scope the query to the caller's facility/district.
-    // A bad/absent token yields zeros rather than a 401 that would blank the UI.
+    const authHeader = request.headers.get('authorization') ?? '';
+
+    if (!authHeader.toLowerCase().startsWith('bearer ')) {
+      return NextResponse.json({ ok: false, error: 'Unauthorized', code: 'UNAUTHENTICATED' }, { status: 401, headers: NO_STORE });
+    }
+
+    const token = authHeader.slice(7).trim();
+    const auth = getAdminAuth();
+    if (!auth) {
+      return NextResponse.json({ ok: false, error: 'Admin Auth unavailable', code: 'ADMIN_UNAVAILABLE' }, { status: 500, headers: NO_STORE });
+    }
+
     try {
-      const authHeader = request.headers.get('authorization') ?? '';
-      const token = authHeader.toLowerCase().startsWith('bearer ') ? authHeader.slice(7).trim() : null;
-      if (token) {
-        const auth = getAdminAuth();
-        if (auth) {
-          const decoded = await auth.verifyIdToken(token);
-          const isPrivileged = decoded.admin === true || decoded.role === 'mo';
-          if (!isPrivileged) {
-            return ok(EMPTY_PAYLOAD, { ...baseMeta(), reason: 'insufficient-claims' });
-          }
-          facilityId = facilityId ?? (decoded.facilityId as string | undefined) ?? null;
-          district = district ?? (decoded.district as string | undefined) ?? null;
-        }
+      const decodedToken = await auth.verifyIdToken(token);
+      
+      const role = decodedToken.role;
+      if (role !== 'district' && role !== 'district_admin' && role !== 'admin') {
+         return NextResponse.json({ ok: false, error: 'Forbidden', code: 'UNAUTHENTICATED' }, { status: 403, headers: NO_STORE });
       }
-    } catch (authErr) {
-      console.warn('[analytics/district] token verify failed, continuing unscoped:', authErr);
+
+      if (decodedToken.district_id || decodedToken.districtId || decodedToken.district) {
+        district = (decodedToken.district_id || decodedToken.districtId || decodedToken.district) as string;
+      }
+      if (decodedToken.facilityId) {
+        facilityId = decodedToken.facilityId as string;
+      }
+    } catch (err) {
+      console.warn('[api/analytics/district] Token verification failed:', err instanceof Error ? err.message : err);
+      return NextResponse.json({ ok: false, error: 'Invalid token', code: 'UNAUTHENTICATED' }, { status: 401, headers: NO_STORE });
     }
 
     const start = Timestamp.fromDate(startDate);
