@@ -1,4 +1,4 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, initializeFirestore, memoryLocalCache } from "firebase/firestore";
 
@@ -17,7 +17,7 @@ const firebaseConfig = {
 // Guard initialization to prevent errors during build time when env vars might be missing
 const isConfigValid = !!firebaseConfig.apiKey;
 
-let app;
+let app: FirebaseApp | null = null;
 if (isConfigValid) {
     app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 } else {
