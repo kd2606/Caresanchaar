@@ -1,0 +1,73 @@
+[debug] [2026-09-06T12:32:04.863Z] ----------------------------------------------------------------------
+[debug] [2026-09-06T12:32:04.864Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dewan\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js deploy --only firestore:rules
+[debug] [2026-09-06T12:32:04.864Z] CLI Version:   15.29.0
+[debug] [2026-09-06T12:32:04.864Z] Platform:      win32
+[debug] [2026-09-06T12:32:04.864Z] Node Version:  v24.16.0
+[debug] [2026-09-06T12:32:04.864Z] Detected Agent: antigravity
+[debug] [2026-09-06T12:32:04.864Z] Time:          Sun Sep 06 2026 18:02:04 GMT+0530 (India Standard Time)
+[debug] [2026-09-06T12:32:04.864Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-06T12:32:06.821Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-06T12:32:06.821Z] > authorizing via signed-in user (dewangankrrish50@gmail.com)
+[debug] [2026-09-06T12:32:06.821Z] [iam] checking project healthsense-ai-prod-478 for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]
+[debug] [2026-09-06T12:32:06.828Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:06.828Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:06.829Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/healthsense-ai-prod-478:testIamPermissions [none]
+[debug] [2026-09-06T12:32:06.829Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/healthsense-ai-prod-478:testIamPermissions  x-goog-user-project=healthsense-ai-prod-478
+[debug] [2026-09-06T12:32:06.829Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/healthsense-ai-prod-478:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[debug] [2026-09-06T12:32:08.548Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/healthsense-ai-prod-478:testIamPermissions 200
+[debug] [2026-09-06T12:32:08.548Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/healthsense-ai-prod-478:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get"]}
+[info] 
+[info] === Deploying to 'healthsense-ai-prod-478'...
+[info] 
+[info] i  deploying firestore 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[info] i  firestore: ensuring required API firestore.googleapis.com is enabled... 
+[debug] [2026-09-06T12:32:08.550Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:08.550Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:08.550Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/healthsense-ai-prod-478/databases/(default) [none]
+[debug] [2026-09-06T12:32:10.370Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/healthsense-ai-prod-478/databases/(default) 200
+[debug] [2026-09-06T12:32:10.370Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/healthsense-ai-prod-478/databases/(default) {"name":"projects/healthsense-ai-prod-478/databases/(default)","uid":"cfeb8dd0-741b-4e24-93ce-81b97ced3939","createTime":"2026-06-16T17:53:36.076542Z","updateTime":"2026-06-16T17:53:36.076542Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-09-06T11:32:11.804017Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","enhancedTextSearchQueryMode":"ENHANCED_QUERY_MODE_ENABLED","etag":"IM3T14b72ZYDMJiMgpSqjJUD"}
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2026-09-06T12:32:10.373Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:10.373Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:10.373Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478:test [none]
+[debug] [2026-09-06T12:32:10.373Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478:test [omitted]
+[debug] [2026-09-06T12:32:12.067Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478:test 200
+[debug] [2026-09-06T12:32:12.068Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478:test {"issues":[{"sourcePosition":{"fileName":"firestore.rules","line":19,"column":14,"currentOffset":445,"endOffset":462},"description":"Unused function: isTestDataFiltered.","severity":"WARNING"},{"sourcePosition":{"fileName":"firestore.rules","line":21,"column":32,"currentOffset":596,"endOffset":602},"description":"Invalid variable name: request.","severity":"WARNING"},{"sourcePosition":{"fileName":"firestore.rules","line":21,"column":58,"currentOffset":622,"endOffset":628},"description":"Invalid variable name: request.","severity":"WARNING"}]}
+[warn] !  [W] 19:14 - Unused function: isTestDataFiltered. 
+[warn] !  [W] 21:32 - Invalid variable name: request. 
+[warn] !  [W] 21:58 - Invalid variable name: request. 
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2026-09-06T12:32:12.070Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:12.070Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:12.070Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases pageSize=10&pageToken=
+[debug] [2026-09-06T12:32:12.568Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases 200
+[debug] [2026-09-06T12:32:12.568Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases {"releases":[{"name":"projects/healthsense-ai-prod-478/releases/cloud.firestore","rulesetName":"projects/healthsense-ai-prod-478/rulesets/3ce9babf-0810-451f-8351-5f24f28c1326","createTime":"2026-06-16T17:53:43.122125Z","updateTime":"2026-09-05T11:39:15.529364Z"}]}
+[debug] [2026-09-06T12:32:12.569Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:12.569Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:12.569Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets/3ce9babf-0810-451f-8351-5f24f28c1326 [none]
+[debug] [2026-09-06T12:32:13.957Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets/3ce9babf-0810-451f-8351-5f24f28c1326 200
+[debug] [2026-09-06T12:32:13.957Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets/3ce9babf-0810-451f-8351-5f24f28c1326 [omitted]
+[info] i  firestore: uploading rules firestore.rules... 
+[debug] [2026-09-06T12:32:13.958Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:13.958Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:13.958Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets [none]
+[debug] [2026-09-06T12:32:13.958Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets [omitted]
+[debug] [2026-09-06T12:32:15.505Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets 200
+[debug] [2026-09-06T12:32:15.505Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/rulesets {"name":"projects/healthsense-ai-prod-478/rulesets/44c9726d-e08f-45bc-b0c4-3d9f0f9ecd39","source":{"files":[{"content":"rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    \n    // Core Functions\n    function isAuthenticated() {\n      return request.auth != null;\n    }\n    \n    function getRole() {\n      // Expecting role to be set in token: 'patient', 'asha', 'mo', 'district_admin'\n      return request.auth.token.role;\n    }\n    \n    function isOwner(uid) {\n      return request.auth.uid == uid;\n    }\n    \n    function isTestDataFiltered() {\n      // Enforce that queries on real data exclude test data unless explicitly queried by tester\n      return !('isTestData' in request.resource.data) || request.resource.data.isTestData == false;\n    }\n\n    function isWorker() {\n      return getRole() == 'asha' || getRole() == 'worker';\n    }\n\n    match /users/{userId} {\n      allow read, write: if isAuthenticated() && isOwner(userId);\n      \n      match /{document=**} {\n        allow read, write: if isAuthenticated() && isOwner(userId);\n      }\n    }\n    \n    match /user_roles/{userId} {\n      allow read: if isAuthenticated() && isOwner(userId);\n      allow write: if false; \n    }\n\n    match /patients/{patientId} {\n      // Patients read their own\n      allow read: if isAuthenticated() && getRole() == 'patient' && isOwner(patientId);\n      // Worker reads assigned (where owner_uid == worker uid)\n      allow read, create: if isAuthenticated() && isWorker() && request.resource.data.owner_uid == request.auth.uid;\n      allow update: if isAuthenticated() && isWorker() && resource.data.owner_uid == request.auth.uid && request.resource.data.owner_uid == request.auth.uid;\n      allow delete: if false;\n    }\n\n    match /triage_records/{recordId} {\n      allow read: if isAuthenticated() && ((getRole() == 'patient' && resource.data.patient_id == request.auth.uid) || (isWorker() && resource.data.owner_uid == request.auth.uid));\n      allow create: if isAuthenticated() && isWorker() && request.resource.data.owner_uid == request.auth.uid;\n      allow update, delete: if false; // clinical records are write-once\n    }\n\n    match /referrals/{referralId} {\n      allow read: if isAuthenticated() && isWorker() && resource.data.owner_uid == request.auth.uid;\n      // Medical Officer can read referrals routed to their facility\n      allow read: if isAuthenticated() && getRole() == 'mo' && resource.data.target_facility == request.auth.token.facility_id;\n      // Creation is allowed by Worker only via proposals to 'CREATED' state\n      allow create: if isAuthenticated() && isWorker() && request.resource.data.owner_uid == request.auth.uid && request.resource.data.status == 'CREATED';\n      // Updates strictly handled by server functions\n      allow update: if false;\n      allow delete: if false;\n    }\n\n    match /worker_tasks/{taskId} {\n      allow read: if isAuthenticated() && isWorker() && resource.data.worker_uid == request.auth.uid;\n      allow create: if isAuthenticated() && isWorker() && request.resource.data.worker_uid == request.auth.uid;\n      allow update: if isAuthenticated() && isWorker() && resource.data.worker_uid == request.auth.uid;\n      allow delete: if false;\n    }\n\n    match /referral_events/{eventId} {\n      allow read: if isAuthenticated() && (isWorker() || getRole() == 'mo');\n      allow write: if false; // Server authoritative\n    }\n\n    match /audit_events/{eventId} {\n      allow read: if isAuthenticated() && getRole() == 'compliance_auditor';\n      allow write: if false; // Server written only\n    }\n\n    match /aggregates/{docId} {\n      allow read: if isAuthenticated() && getRole() == 'district_admin';\n      allow write: if false; // Server computed\n    }\n  }\n}\n","name":"firestore.rules"}]},"createTime":"2026-09-06T12:32:16.935727Z","metadata":{"services":["cloud.firestore"]}}
+[debug] [2026-09-06T12:32:15.505Z] [rules] created ruleset projects/healthsense-ai-prod-478/rulesets/44c9726d-e08f-45bc-b0c4-3d9f0f9ecd39
+[debug] [2026-09-06T12:32:15.506Z] [rules] releasing cloud.firestore with ruleset projects/healthsense-ai-prod-478/rulesets/44c9726d-e08f-45bc-b0c4-3d9f0f9ecd39
+[debug] [2026-09-06T12:32:15.506Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:15.506Z] Checked if tokens are valid: true, expires at: 1788701477073
+[debug] [2026-09-06T12:32:15.507Z] >>> [apiv2][query] PATCH https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases/cloud.firestore [none]
+[debug] [2026-09-06T12:32:15.507Z] >>> [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases/cloud.firestore {"release":{"name":"projects/healthsense-ai-prod-478/releases/cloud.firestore","rulesetName":"projects/healthsense-ai-prod-478/rulesets/44c9726d-e08f-45bc-b0c4-3d9f0f9ecd39"}}
+[debug] [2026-09-06T12:32:17.230Z] <<< [apiv2][status] PATCH https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases/cloud.firestore 200
+[debug] [2026-09-06T12:32:17.230Z] <<< [apiv2][body] PATCH https://firebaserules.googleapis.com/v1/projects/healthsense-ai-prod-478/releases/cloud.firestore {"name":"projects/healthsense-ai-prod-478/releases/cloud.firestore","rulesetName":"projects/healthsense-ai-prod-478/rulesets/44c9726d-e08f-45bc-b0c4-3d9f0f9ecd39","createTime":"2026-06-16T17:53:43.122125Z","updateTime":"2026-09-06T12:32:17.902227Z"}
+[debug] [2026-09-06T12:32:17.230Z] [rules] updated release projects/healthsense-ai-prod-478/releases/cloud.firestore
+[info] +  firestore: released rules firestore.rules to cloud.firestore 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/healthsense-ai-prod-478/overview

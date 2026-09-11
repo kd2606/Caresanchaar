@@ -1,0 +1,148 @@
+{
+  "created_at": "2026-09-07",
+  "purpose": "Research/RAG preparation only; not clinically validated for diagnosis or patient care.",
+  "files": [
+    {
+      "file": "disease-symptom-columbia.csv",
+      "source": "https://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html",
+      "rows": 1865,
+      "columns": [
+        "disease",
+        "disease_count",
+        "symptom"
+      ],
+      "bytes": 124082,
+      "validated_rows": 1865,
+      "validated_columns": [
+        "disease",
+        "disease_count",
+        "symptom"
+      ]
+    },
+    {
+      "file": "heart-disease.csv",
+      "source": "https://archive.ics.uci.edu/static/public/45/heart+disease.zip",
+      "dataset_id": 45,
+      "rows": 303,
+      "columns": [
+        "age",
+        "sex",
+        "cp",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal",
+        "num"
+      ],
+      "source_member": "processed.cleveland.data",
+      "bytes": 18532,
+      "validated_rows": 303,
+      "validated_columns": [
+        "age",
+        "sex",
+        "cp",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal",
+        "num"
+      ]
+    },
+    {
+      "file": "diabetes.csv",
+      "source": "https://archive.ics.uci.edu/static/public/34/diabetes.zip",
+      "dataset_id": 34,
+      "rows": 29264,
+      "columns": [
+        "Date",
+        "Time",
+        "Code",
+        "Value"
+      ],
+      "source_member": "diabetes-data.tar.Z",
+      "bytes": 685959,
+      "validated_rows": 29264,
+      "validated_columns": [
+        "Date",
+        "Time",
+        "Code",
+        "Value"
+      ]
+    },
+    {
+      "file": "chronic-kidney-disease.csv",
+      "source": "https://archive.ics.uci.edu/static/public/336/chronic+kidney+disease.zip",
+      "dataset_id": 336,
+      "rows": 400,
+      "columns": [
+        "age",
+        "bp",
+        "sg",
+        "al",
+        "su",
+        "rbc",
+        "pc",
+        "pcc",
+        "ba",
+        "bgr",
+        "bu",
+        "sc",
+        "sod",
+        "pot",
+        "hemo",
+        "pcv",
+        "wbcc",
+        "rbcc",
+        "htn",
+        "dm",
+        "cad",
+        "appet",
+        "pe",
+        "ane",
+        "class"
+      ],
+      "source_member": "chronic_kidney_disease_full.arff",
+      "bytes": 42154,
+      "validated_rows": 400,
+      "validated_columns": [
+        "age",
+        "bp",
+        "sg",
+        "al",
+        "su",
+        "rbc",
+        "pc",
+        "pcc",
+        "ba",
+        "bgr",
+        "bu",
+        "sc",
+        "sod",
+        "pot",
+        "hemo",
+        "pcv",
+        "wbcc",
+        "rbcc",
+        "htn",
+        "dm",
+        "cad",
+        "appet",
+        "pe",
+        "ane",
+        "class"
+      ]
+    }
+  ]
+}

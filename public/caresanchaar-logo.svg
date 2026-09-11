@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+
+    <!-- Deep black background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#000000"/>
+    </linearGradient>
+
+    <!-- Circle background -->
+    <radialGradient id="circleGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" style="stop-color:#111111"/>
+      <stop offset="100%" style="stop-color:#050505"/>
+    </radialGradient>
+
+    <!-- Pulse line gradient -->
+    <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0"/>
+      <stop offset="20%" style="stop-color:#00ff88;stop-opacity:0.5"/>
+      <stop offset="50%" style="stop-color:#00ff88;stop-opacity:1"/>
+      <stop offset="80%" style="stop-color:#00e5ff;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#00e5ff;stop-opacity:0"/>
+    </linearGradient>
+
+    <!-- Ring gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.9"/>
+      <stop offset="40%" style="stop-color:#00e5ff;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0.1"/>
+    </linearGradient>
+
+    <!-- Glow shimmer top -->
+    <radialGradient id="shimmer" cx="50%" cy="20%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Green dot glow -->
+    <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="lineGlow" x="-30%" y="-100%" width="160%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="ringGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="centerDotGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="textGlow" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="circleClip">
+      <circle cx="250" cy="215" r="148"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- Pure black background with rounded square (app icon shape) -->
+  <rect width="500" height="500" fill="url(#bgGrad)" rx="80"/>
+
+  <!-- Very subtle noise texture lines -->
+  <g opacity="0.025" stroke="#ffffff" stroke-width="0.4">
+    <line x1="0" y1="83" x2="500" y2="83"/>
+    <line x1="0" y1="166" x2="500" y2="166"/>
+    <line x1="0" y1="249" x2="500" y2="249"/>
+    <line x1="0" y1="332" x2="500" y2="332"/>
+    <line x1="0" y1="415" x2="500" y2="415"/>
+    <line x1="83" y1="0" x2="83" y2="500"/>
+    <line x1="166" y1="0" x2="166" y2="500"/>
+    <line x1="249" y1="0" x2="249" y2="500"/>
+    <line x1="332" y1="0" x2="332" y2="500"/>
+    <line x1="415" y1="0" x2="415" y2="500"/>
+  </g>
+
+  <!-- Outermost faint orbit ring -->
+  <circle cx="250" cy="215" r="168" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.08"/>
+  <circle cx="250" cy="215" r="178" fill="none" stroke="#00ff88" stroke-width="0.3" opacity="0.04"/>
+
+  <!-- Main circle -->
+  <circle cx="250" cy="215" r="148" fill="url(#circleGrad)"/>
+
+  <!-- Shimmer inside circle -->
+  <circle cx="250" cy="215" r="148" fill="url(#shimmer)"/>
+
+  <!-- Main glowing ring -->
+  <circle cx="250" cy="215" r="148" fill="none" stroke="url(#ringGrad)" stroke-width="1.8" filter="url(#ringGlow)"/>
+
+  <!-- Second inner thin ring for depth -->
+  <circle cx="250" cy="215" r="140" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.08"/>
+
+  <!-- ECG / Pulse line -->
+  <g filter="url(#lineGlow)" clip-path="url(#circleClip)">
+    <!-- Shadow line behind -->
+    <polyline
+      points="102,215 148,215 166,182 184,250 200,198 216,236 230,170 248,265 266,170 282,236 298,198 314,250 332,182 350,215 398,215"
+      fill="none"
+      stroke="#00ff88"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.2"
+    />
+    <!-- Main bright line -->
+    <polyline
+      points="102,215 148,215 166,182 184,250 200,198 216,236 230,170 248,265 266,170 282,236 298,198 314,250 332,182 350,215 398,215"
+      fill="none"
+      stroke="url(#pulseGrad)"
+      stroke-width="2.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </g>
+
+  <!-- Center glowing dot -->
+  <circle cx="250" cy="215" r="14" fill="url(#dotGlow)" opacity="0.15" filter="url(#centerDotGlow)"/>
+  <circle cx="250" cy="215" r="5" fill="#00ff88" opacity="0.95" filter="url(#centerDotGlow)"/>
+  <circle cx="250" cy="215" r="2.5" fill="white" opacity="0.9"/>
+
+  <!-- Tiny tick marks on ring — Apple watch style -->
+  <g stroke="#00ff88" stroke-width="1" opacity="0.25">
+    <line x1="250" y1="67" x2="250" y2="75"/>
+    <line x1="250" y1="355" x2="250" y2="363"/>
+    <line x1="102" y1="215" x2="110" y2="215"/>
+    <line x1="390" y1="215" x2="398" y2="215"/>
+  </g>
+
+  <!-- ── WORDMARK ── -->
+
+  <!-- "Diagnoverse" in crisp white -->
+  <text
+    x="250"
+    y="408"
+    text-anchor="middle"
+    font-family="'SF Pro Display', 'Helvetica Neue', Helvetica, sans-serif"
+    font-size="40"
+    font-weight="700"
+    letter-spacing="-1.5"
+    fill="white"
+    opacity="0.97"
+  >Diagnoverse</text>
+
+  <!-- Thin divider line -->
+  <line x1="190" y1="420" x2="310" y2="420" stroke="#00ff88" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- "AI" glowing green label -->
+  <text
+    x="250"
+    y="445"
+    text-anchor="middle"
+    font-family="'SF Pro Display', 'Helvetica Neue', Helvetica, sans-serif"
+    font-size="14"
+    font-weight="500"
+    letter-spacing="8"
+    fill="#00ff88"
+    opacity="0.9"
+    filter="url(#textGlow)"
+  >A I</text>
+
+  <!-- Tagline -->
+  <text
+    x="250"
+    y="470"
+    text-anchor="middle"
+    font-family="'SF Pro Text', 'Helvetica Neue', Helvetica, sans-serif"
+    font-size="9.5"
+    font-weight="300"
+    letter-spacing="3"
+    fill="white"
+    opacity="0.22"
+  >HEALTH · INTELLIGENCE · CARE</text>
+
+</svg>
