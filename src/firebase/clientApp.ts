@@ -2,6 +2,8 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, initializeFirestore, memoryLocalCache } from "firebase/firestore";
 
+import { getAnalytics, isSupported } from "firebase/analytics";
+
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY?.trim(),
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?.trim(),
@@ -9,6 +11,7 @@ const firebaseConfig = {
     storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET?.trim(),
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID?.trim(),
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID?.trim(),
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID?.trim(),
 };
 
 // Guard initialization to prevent errors during build time when env vars might be missing
@@ -46,5 +49,14 @@ if (app) {
     db = null as any;
 }
 
-export { app, auth, db };
+let analytics: any = null;
+if (app && typeof window !== 'undefined') {
+    isSupported().then(yes => {
+        if (yes) {
+            analytics = getAnalytics(app);
+        }
+    });
+}
+
+export { app, auth, db, analytics };
 
