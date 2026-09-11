@@ -21,7 +21,7 @@
     "dexie": "^4.4.5",
     "dexie-react-hooks": "^4.4.0",
     "firebase": "^12.18.0",
-    "firebase-admin": "^14.3.0",
+    "firebase-admin": "^13.10.0",
     "framer-motion": "^12.34.3",
     "genkit": "^1.29.0",
     "genkitx-openai": "^0.30.0",
